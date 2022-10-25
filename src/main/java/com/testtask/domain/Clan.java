@@ -1,7 +1,7 @@
 package com.testtask.domain;
 
 public class Clan {
-    private long id;
+    private final long id;
     private String name;
     private volatile int  gold;
 
@@ -15,10 +15,6 @@ public class Clan {
 
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {

@@ -1,11 +1,19 @@
 package com.testtask.repository;
 
+import com.testtask.domain.Clan;
+import com.testtask.service.ClanService;
+
 import java.sql.*;
 
 public class TaskRepository {
 
     private Connection connection;
     private Statement statement;
+    private final ClanService clanService;
+
+    public TaskRepository(ClanService clanService) {
+        this.clanService = clanService;
+    }
 
     public void connect() {
         try {
@@ -33,7 +41,10 @@ public class TaskRepository {
         }
         return 0;
     }
-
+    public void completeTask(long clanId, long userId, long taskId) {
+        Clan clan = clanService.getClan(clanId);
+        clanService.addGold(clanId, userId, getTaskReward(taskId));
+    }
     public void disconnect() {
         try {
             connection.close();

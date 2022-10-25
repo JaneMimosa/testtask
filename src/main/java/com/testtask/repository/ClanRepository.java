@@ -20,10 +20,10 @@ public class ClanRepository {
         }
     }
 
-    public synchronized int addGold(long clanId, int addedGold) throws SQLException {
+    public synchronized int addGold(long clanId, long userId, int addedGold) throws SQLException {
         try {
         connect();
-            String query = String.format("SELECT clan_gold from Сlans WHERE clan_id='%s';", clanId);
+            String query = String.format("SELECT clan_gold from clans WHERE clan_id='%s';", clanId);
                 ResultSet rs = statement.executeQuery(query);
                 int gold = rs.getInt("clan_gold") + addedGold;
                 String queryGold = String.format("UPDATE Clans SET clan_gold = '%s' WHERE clan_id = '%s';", gold, clanId);
@@ -37,10 +37,27 @@ public class ClanRepository {
         return 0;
     }
 
+    public synchronized int decreaseGold(long clanId, long userId, int decreaseGold) throws SQLException {
+        try {
+            connect();
+            String query = String.format("SELECT clan_gold from clans WHERE clan_id='%s';", clanId);
+            ResultSet rs = statement.executeQuery(query);
+            int gold = rs.getInt("clan_gold") - decreaseGold;
+            String queryGold = String.format("UPDATE Clans SET clan_gold = '%s' WHERE clan_id = '%s';", gold, clanId);
+            statement.executeUpdate(queryGold);
+            return gold;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return 0;
+    }
+
     public Clan getClan(long clanId) {
         try {
         connect();
-        String query = String.format("SELECT * from Clans WHERE clan_id='%s';", clanId);
+        String query = String.format("SELECT * from clans WHERE clan_id='%s';", clanId);
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 String clanName = rs.getString("clan_name");

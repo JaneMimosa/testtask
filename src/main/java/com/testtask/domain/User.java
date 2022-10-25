@@ -1,14 +1,12 @@
 package com.testtask.domain;
 
-public class Task {
-    private final long id;
+public class User {
+   private final long  id;
     private String name;
-    private final int gold;
 
-    public Task(long id, String name, int gold) {
+    public User(long id, String name) {
         this.id = id;
         this.name = name;
-        this.gold = gold;
     }
 
     public long getId() {
@@ -21,9 +19,5 @@ public class Task {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getGold() {
-        return gold;
     }
 }

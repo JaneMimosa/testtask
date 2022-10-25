@@ -13,13 +13,21 @@ public class ClanService {
         this.clanRepository = clanRepository;
     }
 
-    public int AddGold(long clanId, int addedGold) {
+    public int addGold(long clanId, long userId, int addedGold) {
         try {
-            return clanRepository.addGold(clanId, addedGold);
+            return clanRepository.addGold(clanId, userId, addedGold);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return addedGold;
+    }
+
+    public int decreaseGold(long clanId, long userId, int decreaseGold) {
+        try {
+            return clanRepository.decreaseGold(clanId, userId, decreaseGold);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public int getClanGold(long clanId) {
